@@ -1,0 +1,226 @@
+$ python -m architect.cli --no-llm "a competitive valorant clan called "Night Owls" with tournaments and memes"
+Server: Night Owls
+Gaming community: LFG, clips, tournaments, game nights. Built from: gaming + events + off topic.
+Planner: fallback
+Settings: verification=medium media_filter=all_members notifications=mentions community=True rules_gate=True -> Gamer
+
+ROLES (top -> bottom)
+  #F5B841 Owner                  [administrator] ADMINISTRATOR
+  #E5484D Admin                  [admin] create_instant_invite, kick_members, ban_members, manage_channels, manage_guild, add_reactions, view_audit_log, priority_speaker +37 more
+  #3B82F6 Moderator              [moderator] create_instant_invite, kick_members, add_reactions, view_audit_log, priority_speaker, stream, view_channel, send_messages +27 more
+  #F97316 Event Host             [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +19 more
+  #A855F7 Streamer               [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
+  #FACC15 Pro Player             [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
+  #22C55E Gamer                  [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
+  #06B6D4 LFG Ping               [cosmetic] -
+
+📢 | IMPORTANT | 📢 (read-only)
+   # ╭📜︱rules  — Read these first. By chatting here you agree to them.
+   📣 ┊🔔︱announcements  — Official news.
+   # ┊👋︱welcome  — Say hi to new members.
+   # ╰📅︱events  — Game nights and tournaments.
+💬 | COMMUNITY | 💬
+   # ╭💬︱general slowmode 2s  — Talk about anything.
+   # ┊🎬︱clips slowmode 15s  — Your best plays.
+   # ┊😂︱memes  — Memes (SFW).
+   # ╰🪪︱self-roles [read-only]  — Pick your games and pings.
+🎮 | GAMING | 🎮
+   # ╭🤝︱looking-for-group  — Find teammates. Say game, region, rank.
+   🗂 ┊🧠︱strategies  — Guides, builds and tips.
+   # ╰🏆︱tournaments [read-only]  — Brackets, sign-ups and results.
+🎉 | EVENTS | 🎉
+   # 🎁︱giveaways [read-only]  — Giveaways and contests.
+🎈 | OFF TOPIC | 🎈
+   # 🐾︱pets  — Pet pics.
+🔒 | STAFF | 🔒 (private: Owner, Admin, Moderator + staff)
+   # ╭💬︱staff-chat  — Private: staff only.
+   # ╰📋︱mod-log  — Private: AutoMod alerts and staff actions.
+🔊 | VOICE | 🔊
+   🔈 ╭🔊 | Lounge
+   🔈 ┊🎮 | Squad 1
+   🔈 ┊🎮 | Squad 2
+   🔈 ┊🏆 | Tournament
+   🔈 ┊📡 | Streaming
+   🔈 ╰💤 | AFK
+
+RULES (posted in #rules)
+  1. Be respectful. No harassment, hate speech, slurs or personal attacks.
+  2. No spam, flooding or unsolicited DMs to members.
+  3. Keep content safe for work. No NSFW, gore or shock content.
+  4. No scams, phishing links or fake giveaways.
+  5. Use the right channel for each topic.
+  6. Follow Discord's Terms of Service and Community Guidelines.
+  7. Staff decisions are final; if you disagree, ask a staff member privately and politely.
+  8. No cheating, hacks or selling accounts.
+  9. Keep trash talk friendly.
+WELCOME (#welcome): Welcome to Night Owls! Read the rules, grab your game roles, and find a squad in looking-for-group.
+AUTOMOD: Block suspected spam, Block mention spam, Block slurs and sexual content, Block scam bait
+
+(preview embed size 1224/6000 characters)
+
+
+$ python -m architect.cli --no-llm "study group for AP exams with homework help and focus rooms"
+Study group: subjects, homework help, resources, focus rooms. Built from: study.
+Planner: fallback
+Settings: verification=low media_filter=all_members notifications=mentions community=True rules_gate=True -> Student
+
+ROLES (top -> bottom)
+  #F5B841 Owner                  [administrator] ADMINISTRATOR
+  #E5484D Organizer              [admin] create_instant_invite, kick_members, ban_members, manage_channels, manage_guild, add_reactions, view_audit_log, priority_speaker +37 more
+  #22C55E Tutor                  [helper] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +17 more
+  #3B82F6 Moderator              [moderator] create_instant_invite, kick_members, add_reactions, view_audit_log, priority_speaker, stream, view_channel, send_messages +27 more
+  #94A3B8 Student                [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
+
+📌 | START HERE | 📌 (read-only)
+   # ╭📜︱rules  — Read first.
+   📣 ┊🔔︱announcements  — Exams, deadlines and sessions.
+   # ╰👋︱welcome  — Introduce yourself.
+📚 | STUDY | 📚
+   # ╭💬︱general  — Chat and check-ins.
+   🗂 ┊❓︱homework-help  — One post per question. Show what you tried.
+   # ┊🔗︱resources  — Notes, links and past papers.
+   # ┊🎯︱goals  — Daily goals and wins.
+   # ╰🗓️︱schedule  — Study sessions and exam dates.
+⏱️ | FOCUS | ⏱️
+   🔈 ╭🔇 | Focus Room 1
+   🔈 ┊🔇 | Focus Room 2
+   🔈 ┊🗣️ | Group Study
+   🔈 ╰🍅 | Pomodoro
+🔒 | STAFF | 🔒 (private: Owner, Organizer, Moderator + staff)
+   # ╭💬︱organizers  — Private.
+   # ╰📋︱mod-log  — Private.
+
+RULES (posted in #rules)
+  1. Be kind and patient. Everyone learns at their own pace.
+  2. No cheating: don't share live exam answers or do someone's graded work for them.
+  3. Show what you've tried when you ask for help.
+  4. Keep focus rooms quiet; cameras and mics are optional.
+  5. No spam or unrelated self-promotion.
+  6. Follow Discord's Terms of Service and Community Guidelines.
+WELCOME (#welcome): Welcome to the server! Post your goal for the week in goals and join a focus room any time.
+AUTOMOD: Block suspected spam, Block mention spam, Block slurs and sexual content
+
+(preview embed size 922/6000 characters)
+
+
+$ python -m architect.cli --no-llm "fan server for my youtube channel with art and music"
+Creator fanbase: uploads, streams, fan art, supporter perks. Built from: creator + music + art.
+Planner: fallback
+Settings: verification=medium media_filter=all_members notifications=mentions community=True rules_gate=True -> Fan
+
+ROLES (top -> bottom)
+  #F5B841 Owner                  [administrator] ADMINISTRATOR
+  #E5484D Admin                  [admin] create_instant_invite, kick_members, ban_members, manage_channels, manage_guild, add_reactions, view_audit_log, priority_speaker +37 more
+  #3B82F6 Moderator              [moderator] create_instant_invite, kick_members, add_reactions, view_audit_log, priority_speaker, stream, view_channel, send_messages +27 more
+  #A855F7 Creator                [admin] create_instant_invite, kick_members, ban_members, manage_channels, manage_guild, add_reactions, view_audit_log, priority_speaker +37 more
+  #14B8A6 Editor                 [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
+  #EC4899 Supporter              [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
+  #94A3B8 Fan                    [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
+  #F97316 Stream Pings           [cosmetic] -
+
+📢 | IMPORTANT | 📢 (read-only)
+   # ╭📜︱rules  — Read these first. By chatting here you agree to them.
+   📣 ┊🔔︱announcements  — Official news.
+   # ┊👋︱welcome  — Say hi to new members.
+   # ┊🎬︱new-uploads  — Every new video and stream.
+   # ╰🗓️︱schedule  — Stream and upload schedule.
+💖 | FAN ZONE | 💖
+   # ╭💬︱general slowmode 3s  — Hang out.
+   # ┊🎨︱fan-art slowmode 30s  — Your art. Credit the artist.
+   # ┊😂︱memes  — Memes (SFW).
+   🗂 ┊💡︱video-ideas  — Suggest a video. One idea per post.
+   # ╰🪪︱self-roles [read-only]  — Pick your pings.
+⭐ | SUPPORTERS | ⭐ (private: Supporter, Creator, Owner, Admin, Moderator + staff)
+   # ╭⭐︱supporter-chat  — Thanks for the support!
+   # ╰👀︱early-access  — Early cuts and behind the scenes.
+🎵 | MUSIC | 🎵
+   # ╭🎵︱music-share  — Share tracks.
+   🔈 ╰🎧 | Music Room
+🎨 | ART | 🎨
+   # ╭🎨︱art-showcase slowmode 30s  — Your art.
+   🗂 ╰🖌️︱feedback  — Ask for critique.
+🔒 | STAFF | 🔒 (private: Owner, Admin, Moderator + staff)
+   # ╭💬︱staff-chat  — Private: staff only.
+   # ┊📋︱mod-log  — Private: AutoMod alerts and staff actions.
+   # ╰✂️︱editing [private]  — Private: editors and creator.
+🔊 | VOICE | 🔊
+   🔈 ╭🔊 | Lounge
+   🔈 ┊🍿 | Watch Party
+   🎙 ┊🎙️ | Stage
+   🔈 ╰💤 | AFK
+
+RULES (posted in #rules)
+  1. Be respectful. No harassment, hate speech, slurs or personal attacks.
+  2. No spam, flooding or unsolicited DMs to members.
+  3. Keep content safe for work. No NSFW, gore or shock content.
+  4. No scams, phishing links or fake giveaways.
+  5. Use the right channel for each topic.
+  6. Follow Discord's Terms of Service and Community Guidelines.
+  7. Staff decisions are final; if you disagree, ask a staff member privately and politely.
+  8. No leaks of early-access content.
+  9. No hate towards other creators.
+WELCOME (#welcome): Welcome to the server! Turn on Stream Pings in self-roles so you never miss a stream.
+AUTOMOD: Block suspected spam, Block mention spam, Block slurs and sexual content, Block scam bait
+
+(preview embed size 1246/6000 characters)
+
+
+$ python -m architect.cli --preset orrin
+Server: ORRIN
+The ORRIN community server layout (software product).
+Planner: preset:orrin
+Settings: verification=medium media_filter=all_members notifications=mentions community=True rules_gate=True -> Member
+
+ROLES (top -> bottom)
+  #F5B841 Owner                  [administrator] ADMINISTRATOR
+  #E5484D Admin                  [admin] create_instant_invite, kick_members, ban_members, manage_channels, manage_guild, add_reactions, view_audit_log, priority_speaker +37 more
+  #3B82F6 Moderator              [moderator] create_instant_invite, kick_members, add_reactions, view_audit_log, priority_speaker, stream, view_channel, send_messages +27 more
+  #22C55E Helper                 [helper] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +17 more
+  #A855F7 Content Creator        [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
+  #06B6D4 Tester                 [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
+  #EC4899 Supporter              [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
+  #94A3B8 Member                 [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
+
+📢 | IMPORTANT | 📢 (read-only)
+   # ╭📜︱rules  — Read these first. By chatting here you agree to them.
+   📣 ┊🔔︱announcements  — Official news.
+   # ┊👋︱welcome  — Say hi to new members.
+   # ┊🛠️︱changelog  — What changed in each version.
+   # ╰👀︱sneak-peek  — Early looks at what's coming.
+💬 | COMMUNITY | 💬
+   # ╭💬︱lobby slowmode 3s  — General chat. Keep it friendly.
+   # ┊🖼️︱showcase slowmode 30s  — Show your setups and creations.
+   # ┊📺︱media  — Clips, screenshots and memes (SFW).
+   # ┊📽️︱content-creator [read-only]  — Videos and streams by our Content Creators.
+   🗂 ┊💡︱suggestions  — One post per idea. Upvote with a reaction.
+   # ╰🪪︱roles [read-only]  — What every role means and how to get it.
+🆘 | SUPPORT | 🆘
+   🗂 ╭🆘︱help  — Ask anything. One post per question.
+   🗂 ┊🐞︱bug-reports  — One post per bug: version, OS, steps, what happened.
+   # ╰💿︱install-help slowmode 5s  — Download and first-launch problems.
+🧪 | TESTING | 🧪 (private: Tester, Owner, Admin, Moderator + staff)
+   # ╭🧪︱testers  — Private: testers and staff.
+   # ╰📦︱test-builds  — Private: early builds.
+🔒 | STAFF | 🔒 (private: Owner, Admin, Moderator + staff)
+   # ╭💬︱staff-chat  — Private: staff only.
+   # ┊📋︱mod-log  — Private: AutoMod alerts and staff actions.
+   # ╰🧑‍💻︱dev-lobby  — Private: development talk.
+🔊 | VOICE | 🔊
+   🔈 ╭🔊 | Lounge
+   🎙 ┊🎙️ | Stage
+   🔈 ╰💤 | AFK
+
+RULES (posted in #rules)
+  1. Be respectful. No harassment, hate speech, slurs or personal attacks.
+  2. No spam, flooding or unsolicited DMs to members.
+  3. Keep content safe for work. No NSFW, gore or shock content.
+  4. No scams, phishing links or fake giveaways.
+  5. Use the right channel for each topic.
+  6. Follow Discord's Terms of Service and Community Guidelines.
+  7. Staff decisions are final; if you disagree, ask a staff member privately and politely.
+  8. Bug reports go in the bug-reports forum, one post per bug.
+  9. Self-promotion only in showcase, and only if it's related.
+WELCOME (#announcements): Welcome to {server}! Read the rules, grab your roles, and say hi in the lobby. Questions go in help, bugs in bug-reports.
+AUTOMOD: Block suspected spam, Block mention spam, Block slurs and sexual content, Block scam bait
+
+(preview embed size 1163/6000 characters)
