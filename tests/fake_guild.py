@@ -119,11 +119,11 @@ class FakeGuild:
         self._maybe_fail("delete_automod", str(aid))
         self.automod.pop(aid, None)
 
-    async def send(self, cid, content=None, rules=None, server="", accept_role_id=None):
+    async def send(self, cid, content=None, rules=None, server="", accept_role_id=None, role_buttons=None):
         self._maybe_fail("send", str(cid))
         mid = next(self.ids)
         self.messages.append({"id": mid, "channel": cid, "content": content, "rules": rules,
-                              "accept_role_id": accept_role_id})
+                              "accept_role_id": accept_role_id, "role_buttons": list(role_buttons or [])})
         return mid
 
     # helpers for assertions

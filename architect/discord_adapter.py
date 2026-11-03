@@ -7,6 +7,7 @@ import discord
 
 REASON = "ORRIN Architect /setup"
 ACCEPT_PREFIX = "architect:accept:"
+PICK_PREFIX = "architect:pick:"
 
 TRIGGER = {"spam": discord.AutoModRuleTriggerType.spam,
            "mention_spam": discord.AutoModRuleTriggerType.mention_spam,
@@ -25,6 +26,15 @@ def accept_view(role_id) -> discord.ui.View:
     v = discord.ui.View(timeout=None)
     v.add_item(discord.ui.Button(label="I accept the rules", emoji="✅", style=discord.ButtonStyle.success,
                                  custom_id=f"{ACCEPT_PREFIX}{role_id}"))
+    return v
+
+
+def picker_view(role_buttons) -> discord.ui.View:
+    """Persistent toggle buttons for self-assignable roles (handled in Architect.on_interaction)."""
+    v = discord.ui.View(timeout=None)
+    for rid, name in list(role_buttons)[:25]:
+        v.add_item(discord.ui.Button(label=str(name)[:80], style=discord.ButtonStyle.secondary,
+                                     custom_id=f"{PICK_PREFIX}{rid}"))
     return v
 
 
@@ -208,9 +218,12 @@ class DiscordAdapter:
         await r.delete(reason=REASON)
 
     # ---- messages
-    async def send(self, cid, content=None, rules=None, server="", accept_role_id=None):
+    async def send(self, cid, content=None, rules=None, server="", accept_role_id=None, role_buttons=None):
         c = self._chan(cid)
-        if rules:
+        if role_buttons:
+            m = await c.send((content or "Pick your roles:")[:2000], view=picker_view(role_buttons),
+                             allowed_mentions=discord.AllowedMentions.none())
+        elif rules:
             view = accept_view(accept_role_id) if accept_role_id else discord.utils.MISSING
             m = await c.send(embed=rules_embed(rules, server), view=view)
         else:

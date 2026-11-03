@@ -1,6 +1,6 @@
 $ python -m architect.cli --no-llm "a competitive valorant clan called "Night Owls" with tournaments and memes"
 Server: Night Owls
-Gaming community: LFG, clips, tournaments, game nights. Built from: gaming + events + off topic.
+Gaming community: LFG, clips, tournaments, game nights, ranks. Built from: gaming + off topic (big).
 Planner: fallback
 Settings: verification=medium media_filter=all_members notifications=mentions community=True rules_gate=True -> Gamer
 
@@ -8,39 +8,94 @@ ROLES (top -> bottom)
   #F5B841 Owner                  [administrator] ADMINISTRATOR
   #E5484D Admin                  [admin] create_instant_invite, kick_members, ban_members, manage_channels, manage_guild, add_reactions, view_audit_log, priority_speaker +37 more
   #3B82F6 Moderator              [moderator] create_instant_invite, kick_members, add_reactions, view_audit_log, priority_speaker, stream, view_channel, send_messages +27 more
+  #60A5FA Trial Mod              [helper] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +17 more
+  #5865F2 Bots                   [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
   #F97316 Event Host             [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +19 more
-  #A855F7 Streamer               [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
   #FACC15 Pro Player             [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
+  #A855F7 Streamer               [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
+  #F472B6 Team Captain           [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
+  #DC2626 Crimson                [cosmetic] -
+  #F97316 Sunset                 [cosmetic] -
+  #FACC15 Sunflower              [cosmetic] -
+  #34D399 Mint                   [cosmetic] -
+  #0EA5E9 Ocean                  [cosmetic] -
+  #A78BFA Lavender               [cosmetic] -
+  #F59E0B Legend (Lv 50)         [cosmetic] -
+  #8B5CF6 Veteran (Lv 25)        [cosmetic] -
+  #10B981 Regular (Lv 10)        [cosmetic] -
+  #64748B Active (Lv 5)          [cosmetic] -
   #22C55E Gamer                  [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
+  #94A3B8 Announcement Ping      [cosmetic] -
+  #F97316 Event Ping             [cosmetic] -
+  #EC4899 Giveaway Ping          [cosmetic] -
   #06B6D4 LFG Ping               [cosmetic] -
+  #8B5CF6 Game Night Ping        [cosmetic] -
+  #94A3B8 NA                     [cosmetic] -
+  #94A3B8 EU                     [cosmetic] -
+  #94A3B8 Asia                   [cosmetic] -
 
 📢 | IMPORTANT | 📢 (read-only)
    # ╭📜︱rules  — Read these first. By chatting here you agree to them.
    📣 ┊🔔︱announcements  — Official news.
    # ┊👋︱welcome  — Say hi to new members.
-   # ╰📅︱events  — Game nights and tournaments.
+   # ┊🪪︱roles-info  — What every role means and how to earn it.
+   # ┊🎨︱self-roles  — Tap the buttons to pick your colour, pings and more.
+   # ┊❓︱faq  — Answers to the questions everyone asks.
+   # ┊🧭︱server-guide  — Where everything is and how the server works.
+   # ╰🛠️︱patch-notes  — Game updates and server changes.
 💬 | COMMUNITY | 💬
-   # ╭💬︱general slowmode 2s  — Talk about anything.
-   # ┊🎬︱clips slowmode 15s  — Your best plays.
+   # ╭💬︱general slowmode 2s  — Talk about anything. Keep it friendly.
+   # ┊🙋︱introductions  — Tell us who you are and what brought you here.
+   # ┊📸︱media slowmode 10s  — Pictures, clips and screenshots (SFW).
    # ┊😂︱memes  — Memes (SFW).
-   # ╰🪪︱self-roles [read-only]  — Pick your games and pings.
+   # ┊🤖︱bot-commands  — Use bot commands here so other channels stay clean.
+   # ┊🌀︱off-topic  — Anything that doesn't fit elsewhere.
+   # ┊🗳️︱question-of-the-day  — One question a day. Answer in a thread.
+   # ┊🔢︱counting  — Count up one number at a time. Don't count twice in a row.
+   # ┊🎬︱clips slowmode 15s  — Your best plays.
+   # ╰🖥️︱setups  — Show your gaming setup.
 🎮 | GAMING | 🎮
    # ╭🤝︱looking-for-group  — Find teammates. Say game, region, rank.
+   # ┊🕹️︱game-chat  — Talk about the games you play.
    🗂 ┊🧠︱strategies  — Guides, builds and tips.
-   # ╰🏆︱tournaments [read-only]  — Brackets, sign-ups and results.
+   # ┊📈︱ranked  — Ranked grind, rank-ups and duo queue.
+   # ┊📰︱game-news  — News and updates about our games.
+   # ┊🆓︱free-games  — Free game deals (official stores only).
+   # ╰🏅︱achievements  — Brag about your wins.
+🏆 | COMPETITIVE | 🏆
+   # ╭🏆︱tournaments [read-only]  — Brackets, sign-ups and results.
+   # ┊⚔️︱scrims  — Find practice matches.
+   # ┊📊︱leaderboard [read-only]  — Top players this season.
+   🗂 ╰📝︱team-recruitment  — Teams looking for players and players looking for teams.
 🎉 | EVENTS | 🎉
-   # 🎁︱giveaways [read-only]  — Giveaways and contests.
+   # ╭📅︱events [read-only]  — Upcoming events.
+   # ┊🎟️︱event-chat  — Talk about the current event.
+   # ┊🎁︱giveaways [read-only]  — Giveaways and contests.
+   # ╰📊︱polls [read-only]  — Vote on what happens next.
+💡 | FEEDBACK | 💡
+   🗂 ╭💡︱suggestions  — One post per idea. Upvote with a reaction.
+   # ┊📣︱server-feedback  — Tell staff what to improve.
+   # ╰🚩︱report-a-user slowmode 30s  — Report problems. Staff will reply privately.
 🎈 | OFF TOPIC | 🎈
    # 🐾︱pets  — Pet pics.
-🔒 | STAFF | 🔒 (private: Owner, Admin, Moderator + staff)
+🔒 | STAFF | 🔒 (private: Owner, Admin, Moderator, Trial Mod + staff)
    # ╭💬︱staff-chat  — Private: staff only.
-   # ╰📋︱mod-log  — Private: AutoMod alerts and staff actions.
+   # ┊📋︱mod-log  — Private: AutoMod alerts and staff actions.
+   # ┊📌︱staff-announcements  — Private: staff news and decisions.
+   # ┊🚨︱reports  — Private: user reports and how they were handled.
+   # ┊🔨︱mod-commands  — Private: run moderation bot commands here.
+   🔈 ╰🔐 | Staff Meeting
 🔊 | VOICE | 🔊
    🔈 ╭🔊 | Lounge
+   🔈 ┊🛋️ | Chill
    🔈 ┊🎮 | Squad 1
    🔈 ┊🎮 | Squad 2
+   🔈 ┊🎮 | Squad 3
    🔈 ┊🏆 | Tournament
    🔈 ┊📡 | Streaming
+   🔈 ┊👥 | Duo Queue
+   🎙 ┊🎙️ | Game Night Stage
+   🔈 ┊🎵 | Music
    🔈 ╰💤 | AFK
 
 RULES (posted in #rules)
@@ -53,42 +108,70 @@ RULES (posted in #rules)
   7. Staff decisions are final; if you disagree, ask a staff member privately and politely.
   8. No cheating, hacks or selling accounts.
   9. Keep trash talk friendly.
-WELCOME (#welcome): Welcome to Night Owls! Read the rules, grab your game roles, and find a squad in looking-for-group.
+WELCOME (#welcome): Welcome to Night Owls! Read the rules, grab your game and ping roles in self-roles, and find a squad in looking-for-group.
 AUTOMOD: Block suspected spam, Block mention spam, Block slurs and sexual content, Block scam bait
 
-(preview embed size 1224/6000 characters)
+(preview embed size 2564/6000 characters)
 
 
-$ python -m architect.cli --no-llm "study group for AP exams with homework help and focus rooms"
-Study group: subjects, homework help, resources, focus rooms. Built from: study.
+$ python -m architect.cli --no-llm "study group for AP exams with homework help and focus rooms" --size normal
+Study group: subjects, homework help, resources, focus rooms. Built from: study (normal).
 Planner: fallback
 Settings: verification=low media_filter=all_members notifications=mentions community=True rules_gate=True -> Student
 
 ROLES (top -> bottom)
   #F5B841 Owner                  [administrator] ADMINISTRATOR
   #E5484D Organizer              [admin] create_instant_invite, kick_members, ban_members, manage_channels, manage_guild, add_reactions, view_audit_log, priority_speaker +37 more
-  #22C55E Tutor                  [helper] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +17 more
   #3B82F6 Moderator              [moderator] create_instant_invite, kick_members, add_reactions, view_audit_log, priority_speaker, stream, view_channel, send_messages +27 more
+  #22C55E Tutor                  [helper] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +17 more
+  #5865F2 Bots                   [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
+  #14B8A6 Top Helper             [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
+  #DC2626 Crimson                [cosmetic] -
+  #F97316 Sunset                 [cosmetic] -
+  #FACC15 Sunflower              [cosmetic] -
+  #34D399 Mint                   [cosmetic] -
+  #8B5CF6 Scholar (Lv 20)        [cosmetic] -
+  #10B981 Dedicated (Lv 10)      [cosmetic] -
   #94A3B8 Student                [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
+  #F97316 Study Session Ping     [cosmetic] -
+  #EF4444 Exam Reminder Ping     [cosmetic] -
+  #3B82F6 Math                   [cosmetic] -
+  #22C55E Science                [cosmetic] -
 
 📌 | START HERE | 📌 (read-only)
    # ╭📜︱rules  — Read first.
    📣 ┊🔔︱announcements  — Exams, deadlines and sessions.
-   # ╰👋︱welcome  — Introduce yourself.
+   # ┊👋︱welcome  — Introduce yourself.
+   # ╰🎨︱self-roles  — Pick your subjects and reminders.
 📚 | STUDY | 📚
    # ╭💬︱general  — Chat and check-ins.
    🗂 ┊❓︱homework-help  — One post per question. Show what you tried.
    # ┊🔗︱resources  — Notes, links and past papers.
    # ┊🎯︱goals  — Daily goals and wins.
-   # ╰🗓️︱schedule  — Study sessions and exam dates.
+   # ┊🗓️︱schedule  — Study sessions and exam dates.
+   # ┊🤝︱accountability  — Post what you'll do; report back later.
+   # ╰🏅︱wins  — Grades, finished essays and small victories.
+🧪 | SUBJECTS | 🧪
+   # ╭➗︱math  — Algebra to calculus.
+   # ┊🔬︱science  — Biology, chemistry, physics.
+   # ┊🗣️︱languages  — Language learning and practice.
+   # ╰💻︱coding  — Programming help and projects.
+☕ | LOUNGE | ☕
+   # ╭🌀︱off-topic  — Breaks and chat.
+   # ╰🤖︱bot-commands  — Pomodoro and other bot commands.
 ⏱️ | FOCUS | ⏱️
    🔈 ╭🔇 | Focus Room 1
    🔈 ┊🔇 | Focus Room 2
    🔈 ┊🗣️ | Group Study
-   🔈 ╰🍅 | Pomodoro
-🔒 | STAFF | 🔒 (private: Owner, Organizer, Moderator + staff)
+   🔈 ┊🍅 | Pomodoro
+   🔈 ╰🧑‍🏫 | Tutoring
+💡 | FEEDBACK | 💡
+   🗂 ╭💡︱suggestions  — One post per idea. Upvote with a reaction.
+   # ╰📣︱server-feedback  — Tell staff what to improve.
+🔒 | STAFF | 🔒 (private: Owner, Organizer, Moderator, Tutor + staff)
    # ╭💬︱organizers  — Private.
-   # ╰📋︱mod-log  — Private.
+   # ┊📋︱mod-log  — Private.
+   # ╰🧑‍🏫︱tutor-chat  — Private: tutors and staff.
 
 RULES (posted in #rules)
   1. Be kind and patient. Everyone learns at their own pace.
@@ -97,14 +180,14 @@ RULES (posted in #rules)
   4. Keep focus rooms quiet; cameras and mics are optional.
   5. No spam or unrelated self-promotion.
   6. Follow Discord's Terms of Service and Community Guidelines.
-WELCOME (#welcome): Welcome to the server! Post your goal for the week in goals and join a focus room any time.
+WELCOME (#welcome): Welcome to the server! Pick your subjects in self-roles, post your goal for the week in goals and join a focus room any time.
 AUTOMOD: Block suspected spam, Block mention spam, Block slurs and sexual content
 
-(preview embed size 922/6000 characters)
+(preview embed size 1798/6000 characters)
 
 
 $ python -m architect.cli --no-llm "fan server for my youtube channel with art and music"
-Creator fanbase: uploads, streams, fan art, supporter perks. Built from: creator + music + art.
+Creator fanbase: uploads, streams, fan art, supporter perks. Built from: creator + music + art (big).
 Planner: fallback
 Settings: verification=medium media_filter=all_members notifications=mentions community=True rules_gate=True -> Fan
 
@@ -112,41 +195,97 @@ ROLES (top -> bottom)
   #F5B841 Owner                  [administrator] ADMINISTRATOR
   #E5484D Admin                  [admin] create_instant_invite, kick_members, ban_members, manage_channels, manage_guild, add_reactions, view_audit_log, priority_speaker +37 more
   #3B82F6 Moderator              [moderator] create_instant_invite, kick_members, add_reactions, view_audit_log, priority_speaker, stream, view_channel, send_messages +27 more
+  #60A5FA Trial Mod              [helper] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +17 more
+  #5865F2 Bots                   [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
   #A855F7 Creator                [admin] create_instant_invite, kick_members, ban_members, manage_channels, manage_guild, add_reactions, view_audit_log, priority_speaker +37 more
   #14B8A6 Editor                 [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
+  #F472B6 Artist                 [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
   #EC4899 Supporter              [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
+  #FACC15 VIP                    [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
+  #DC2626 Crimson                [cosmetic] -
+  #F97316 Sunset                 [cosmetic] -
+  #FACC15 Sunflower              [cosmetic] -
+  #34D399 Mint                   [cosmetic] -
+  #0EA5E9 Ocean                  [cosmetic] -
+  #A78BFA Lavender               [cosmetic] -
+  #F59E0B Legend (Lv 50)         [cosmetic] -
+  #8B5CF6 Veteran (Lv 25)        [cosmetic] -
+  #10B981 Regular (Lv 10)        [cosmetic] -
+  #64748B Active (Lv 5)          [cosmetic] -
   #94A3B8 Fan                    [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
+  #94A3B8 Announcement Ping      [cosmetic] -
+  #F97316 Event Ping             [cosmetic] -
+  #EC4899 Giveaway Ping          [cosmetic] -
   #F97316 Stream Pings           [cosmetic] -
+  #EF4444 Upload Pings           [cosmetic] -
+  #94A3B8 He/Him                 [cosmetic] -
+  #94A3B8 She/Her                [cosmetic] -
+  #94A3B8 They/Them              [cosmetic] -
 
 📢 | IMPORTANT | 📢 (read-only)
    # ╭📜︱rules  — Read these first. By chatting here you agree to them.
    📣 ┊🔔︱announcements  — Official news.
    # ┊👋︱welcome  — Say hi to new members.
+   # ┊🪪︱roles-info  — What every role means and how to earn it.
+   # ┊🎨︱self-roles  — Tap the buttons to pick your colour, pings and more.
+   # ┊❓︱faq  — Answers to the questions everyone asks.
+   # ┊🧭︱server-guide  — Where everything is and how the server works.
    # ┊🎬︱new-uploads  — Every new video and stream.
-   # ╰🗓️︱schedule  — Stream and upload schedule.
-💖 | FAN ZONE | 💖
-   # ╭💬︱general slowmode 3s  — Hang out.
-   # ┊🎨︱fan-art slowmode 30s  — Your art. Credit the artist.
+   # ┊🗓️︱schedule  — Stream and upload schedule.
+   # ╰🔗︱socials  — All official links.
+💬 | COMMUNITY | 💬
+   # ╭💬︱general slowmode 2s  — Talk about anything. Keep it friendly.
+   # ┊🙋︱introductions  — Tell us who you are and what brought you here.
+   # ┊📸︱media slowmode 10s  — Pictures, clips and screenshots (SFW).
    # ┊😂︱memes  — Memes (SFW).
-   🗂 ┊💡︱video-ideas  — Suggest a video. One idea per post.
-   # ╰🪪︱self-roles [read-only]  — Pick your pings.
-⭐ | SUPPORTERS | ⭐ (private: Supporter, Creator, Owner, Admin, Moderator + staff)
+   # ┊🤖︱bot-commands  — Use bot commands here so other channels stay clean.
+   # ┊🌀︱off-topic  — Anything that doesn't fit elsewhere.
+   # ┊🗳️︱question-of-the-day  — One question a day. Answer in a thread.
+   # ┊🔢︱counting  — Count up one number at a time. Don't count twice in a row.
+   # ┊🎨︱fan-art slowmode 30s  — Your art. Credit the artist.
+   # ┊📡︱stream-chat slowmode 3s  — Chat during live streams.
+   # ┊✂️︱clips  — Best moments from streams.
+   🗂 ╰🔮︱fan-theories  — Theories and discussions.
+📺 | CONTENT | 📺
+   🗂 ╭💡︱video-ideas  — Suggest a video. One idea per post.
+   # ┊📝︱feedback-on-videos  — What you liked and what to change.
+   # ┊🤝︱collabs  — Creators who want to collab.
+   # ╰🎥︱behind-the-scenes [read-only]  — How the videos get made.
+⭐ | SUPPORTERS | ⭐ (private: Supporter, VIP, Creator, Owner, Admin, Moderator + staff)
    # ╭⭐︱supporter-chat  — Thanks for the support!
-   # ╰👀︱early-access  — Early cuts and behind the scenes.
+   # ┊👀︱early-access  — Early cuts and behind the scenes.
+   # ╰📊︱supporter-polls  — Vote on what comes next.
+🎉 | EVENTS | 🎉
+   # ╭📅︱events [read-only]  — Upcoming events.
+   # ┊🎟️︱event-chat  — Talk about the current event.
+   # ┊🎁︱giveaways [read-only]  — Giveaways and contests.
+   # ╰📊︱polls [read-only]  — Vote on what happens next.
+💡 | FEEDBACK | 💡
+   🗂 ╭💡︱suggestions  — One post per idea. Upvote with a reaction.
+   # ┊📣︱server-feedback  — Tell staff what to improve.
+   # ╰🚩︱report-a-user slowmode 30s  — Report problems. Staff will reply privately.
 🎵 | MUSIC | 🎵
    # ╭🎵︱music-share  — Share tracks.
    🔈 ╰🎧 | Music Room
 🎨 | ART | 🎨
    # ╭🎨︱art-showcase slowmode 30s  — Your art.
    🗂 ╰🖌️︱feedback  — Ask for critique.
-🔒 | STAFF | 🔒 (private: Owner, Admin, Moderator + staff)
+🔒 | STAFF | 🔒 (private: Owner, Admin, Moderator, Trial Mod + staff)
    # ╭💬︱staff-chat  — Private: staff only.
    # ┊📋︱mod-log  — Private: AutoMod alerts and staff actions.
+   # ┊📌︱staff-announcements  — Private: staff news and decisions.
+   # ┊🚨︱reports  — Private: user reports and how they were handled.
+   # ┊🔨︱mod-commands  — Private: run moderation bot commands here.
+   🔈 ┊🔐 | Staff Meeting
    # ╰✂️︱editing [private]  — Private: editors and creator.
 🔊 | VOICE | 🔊
    🔈 ╭🔊 | Lounge
+   🔈 ┊🛋️ | Chill
    🔈 ┊🍿 | Watch Party
    🎙 ┊🎙️ | Stage
+   🔈 ┊🎮 | Gaming With Fans
+   🔈 ┊⭐ | Supporter Lounge [private]
+   🔈 ┊🎵 | Music
    🔈 ╰💤 | AFK
 
 RULES (posted in #rules)
@@ -162,7 +301,57 @@ RULES (posted in #rules)
 WELCOME (#welcome): Welcome to the server! Turn on Stream Pings in self-roles so you never miss a stream.
 AUTOMOD: Block suspected spam, Block mention spam, Block slurs and sexual content, Block scam bait
 
-(preview embed size 1246/6000 characters)
+(preview embed size 2607/6000 characters)
+
+
+$ python -m architect.cli --no-llm "small server for me and my friends to hang out"
+General community / friends hangout: chat, media, hobbies, events, voice. Built from: community (small).
+Planner: fallback
+Settings: verification=low media_filter=all_members notifications=mentions community=True rules_gate=False
+
+ROLES (top -> bottom)
+  #F5B841 Owner                  [administrator] ADMINISTRATOR
+  #E5484D Admin                  [admin] create_instant_invite, kick_members, ban_members, manage_channels, manage_guild, add_reactions, view_audit_log, priority_speaker +37 more
+  #3B82F6 Moderator              [moderator] create_instant_invite, kick_members, add_reactions, view_audit_log, priority_speaker, stream, view_channel, send_messages +27 more
+  #FACC15 VIP                    [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
+  #94A3B8 Member                 [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
+  #94A3B8 Announcement Ping      [cosmetic] -
+
+📢 | IMPORTANT | 📢 (read-only)
+   # ╭📜︱rules  — Read these first. By chatting here you agree to them.
+   📣 ┊🔔︱announcements  — Official news.
+   # ┊👋︱welcome  — Say hi to new members.
+   # ╰🎨︱self-roles  — Tap the buttons to pick your colour, pings and more.
+💬 | COMMUNITY | 💬
+   # ╭💬︱general slowmode 2s  — Talk about anything. Keep it friendly.
+   # ╰📸︱media slowmode 10s  — Pictures, clips and screenshots (SFW).
+🎨 | HOBBIES | 🎨
+   # ╭🎮︱gaming  — Games you're playing.
+   # ┊🎵︱music-share  — Share tracks.
+   # ╰🖌️︱art slowmode 30s  — Your art. Credit the artist.
+💡 | FEEDBACK | 💡
+   🗂 💡︱suggestions  — One post per idea. Upvote with a reaction.
+🔒 | STAFF | 🔒 (private: Owner, Admin, Moderator + staff)
+   # ╭💬︱staff-chat  — Private: staff only.
+   # ╰📋︱mod-log  — Private: AutoMod alerts and staff actions.
+🔊 | VOICE | 🔊
+   🔈 ╭🔊 | Lounge
+   🔈 ┊🎉 | Hangout
+   🔈 ╰💤 | AFK
+
+RULES (posted in #rules)
+  1. Be respectful. No harassment, hate speech, slurs or personal attacks.
+  2. No spam, flooding or unsolicited DMs to members.
+  3. Keep content safe for work. No NSFW, gore or shock content.
+  4. No scams, phishing links or fake giveaways.
+  5. Use the right channel for each topic.
+  6. Follow Discord's Terms of Service and Community Guidelines.
+  7. Staff decisions are final; if you disagree, ask a staff member privately and politely.
+  8. Respect people's boundaries and privacy; don't share others' personal info.
+WELCOME (#welcome): Welcome to the server! Read the rules, pick a colour and pings in self-roles, and introduce yourself.
+AUTOMOD: Block suspected spam, Block mention spam, Block slurs and sexual content, Block scam bait
+
+(preview embed size 1010/6000 characters)
 
 
 $ python -m architect.cli --preset orrin
@@ -175,39 +364,95 @@ ROLES (top -> bottom)
   #F5B841 Owner                  [administrator] ADMINISTRATOR
   #E5484D Admin                  [admin] create_instant_invite, kick_members, ban_members, manage_channels, manage_guild, add_reactions, view_audit_log, priority_speaker +37 more
   #3B82F6 Moderator              [moderator] create_instant_invite, kick_members, add_reactions, view_audit_log, priority_speaker, stream, view_channel, send_messages +27 more
+  #60A5FA Trial Mod              [helper] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +17 more
+  #5865F2 Bots                   [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
+  #14B8A6 Developer              [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, manage_messages, embed_links, attach_files +17 more
   #22C55E Helper                 [helper] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +17 more
   #A855F7 Content Creator        [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
   #06B6D4 Tester                 [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
   #EC4899 Supporter              [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
+  #DC2626 Crimson                [cosmetic] -
+  #F97316 Sunset                 [cosmetic] -
+  #FACC15 Sunflower              [cosmetic] -
+  #34D399 Mint                   [cosmetic] -
+  #0EA5E9 Ocean                  [cosmetic] -
+  #A78BFA Lavender               [cosmetic] -
+  #F59E0B Legend (Lv 50)         [cosmetic] -
+  #8B5CF6 Veteran (Lv 25)        [cosmetic] -
+  #10B981 Regular (Lv 10)        [cosmetic] -
+  #64748B Active (Lv 5)          [cosmetic] -
   #94A3B8 Member                 [member] create_instant_invite, add_reactions, stream, view_channel, send_messages, embed_links, attach_files, read_message_history +15 more
+  #94A3B8 Announcement Ping      [cosmetic] -
+  #F97316 Event Ping             [cosmetic] -
+  #EC4899 Giveaway Ping          [cosmetic] -
+  #06B6D4 Update Ping            [cosmetic] -
+  #14B8A6 Beta Ping              [cosmetic] -
+  #94A3B8 He/Him                 [cosmetic] -
+  #94A3B8 She/Her                [cosmetic] -
+  #94A3B8 They/Them              [cosmetic] -
 
 📢 | IMPORTANT | 📢 (read-only)
    # ╭📜︱rules  — Read these first. By chatting here you agree to them.
    📣 ┊🔔︱announcements  — Official news.
    # ┊👋︱welcome  — Say hi to new members.
+   # ┊🪪︱roles-info  — What every role means and how to earn it.
+   # ┊🎨︱self-roles  — Tap the buttons to pick your colour, pings and more.
+   # ┊❓︱faq  — Answers to the questions everyone asks.
+   # ┊🧭︱server-guide  — Where everything is and how the server works.
    # ┊🛠️︱changelog  — What changed in each version.
-   # ╰👀︱sneak-peek  — Early looks at what's coming.
+   # ┊👀︱sneak-peek  — Early looks at what's coming.
+   # ┊🗺️︱roadmap  — What we're building next.
+   # ╰📥︱downloads  — Official download links only.
 💬 | COMMUNITY | 💬
-   # ╭💬︱lobby slowmode 3s  — General chat. Keep it friendly.
+   # ╭💬︱lobby slowmode 2s  — Talk about anything. Keep it friendly.
+   # ┊🙋︱introductions  — Tell us who you are and what brought you here.
+   # ┊📸︱media slowmode 10s  — Pictures, clips and screenshots (SFW).
+   # ┊😂︱memes  — Memes (SFW).
+   # ┊🤖︱bot-commands  — Use bot commands here so other channels stay clean.
+   # ┊🌀︱off-topic  — Anything that doesn't fit elsewhere.
+   # ┊🗳️︱question-of-the-day  — One question a day. Answer in a thread.
+   # ┊🔢︱counting  — Count up one number at a time. Don't count twice in a row.
    # ┊🖼️︱showcase slowmode 30s  — Show your setups and creations.
-   # ┊📺︱media  — Clips, screenshots and memes (SFW).
-   # ┊📽️︱content-creator [read-only]  — Videos and streams by our Content Creators.
-   🗂 ┊💡︱suggestions  — One post per idea. Upvote with a reaction.
-   # ╰🪪︱roles [read-only]  — What every role means and how to get it.
+   # ╰📽️︱content-creator [read-only]  — Videos and streams by our Content Creators.
 🆘 | SUPPORT | 🆘
    🗂 ╭🆘︱help  — Ask anything. One post per question.
    🗂 ┊🐞︱bug-reports  — One post per bug: version, OS, steps, what happened.
-   # ╰💿︱install-help slowmode 5s  — Download and first-launch problems.
-🧪 | TESTING | 🧪 (private: Tester, Owner, Admin, Moderator + staff)
+   # ┊💿︱install-help slowmode 5s  — Download and first-launch problems.
+   # ┊✨︱tips-and-tricks  — Share how you use it.
+   # ╰🧯︱known-issues [read-only]  — Problems we know about and workarounds.
+💡 | FEEDBACK | 💡
+   🗂 ╭💡︱suggestions  — One post per idea. Upvote with a reaction.
+   # ┊📣︱server-feedback  — Tell staff what to improve.
+   # ┊🚩︱report-a-user slowmode 30s  — Report problems. Staff will reply privately.
+   🗂 ╰🧩︱feature-requests  — One feature per post.
+💻 | DEV TALK | 💻
+   # ╭💻︱dev-chat  — Programming and building things.
+   # ┊🔌︱plugins  — Plugins, mods and integrations.
+   🗂 ╰🧑‍🔧︱api-help  — Questions about the API and scripting.
+🎉 | EVENTS | 🎉
+   # ╭📅︱events [read-only]  — Upcoming events.
+   # ┊🎟️︱event-chat  — Talk about the current event.
+   # ┊🎁︱giveaways [read-only]  — Giveaways and contests.
+   # ╰📊︱polls [read-only]  — Vote on what happens next.
+🧪 | TESTING | 🧪 (private: Tester, Developer, Owner, Admin, Moderator + staff)
    # ╭🧪︱testers  — Private: testers and staff.
-   # ╰📦︱test-builds  — Private: early builds.
-🔒 | STAFF | 🔒 (private: Owner, Admin, Moderator + staff)
+   # ┊📦︱test-builds  — Private: early builds.
+   # ╰📝︱tester-feedback  — Private: what worked and what broke.
+🔒 | STAFF | 🔒 (private: Owner, Admin, Moderator, Trial Mod + staff)
    # ╭💬︱staff-chat  — Private: staff only.
    # ┊📋︱mod-log  — Private: AutoMod alerts and staff actions.
+   # ┊📌︱staff-announcements  — Private: staff news and decisions.
+   # ┊🚨︱reports  — Private: user reports and how they were handled.
+   # ┊🔨︱mod-commands  — Private: run moderation bot commands here.
+   🔈 ┊🔐 | Staff Meeting
    # ╰🧑‍💻︱dev-lobby  — Private: development talk.
 🔊 | VOICE | 🔊
    🔈 ╭🔊 | Lounge
+   🔈 ┊🛋️ | Chill
    🎙 ┊🎙️ | Stage
+   🔈 ┊👥 | Pair Programming
+   🔈 ┊🎧 | Support Call
+   🔈 ┊🎵 | Music
    🔈 ╰💤 | AFK
 
 RULES (posted in #rules)
@@ -220,7 +465,8 @@ RULES (posted in #rules)
   7. Staff decisions are final; if you disagree, ask a staff member privately and politely.
   8. Bug reports go in the bug-reports forum, one post per bug.
   9. Self-promotion only in showcase, and only if it's related.
-WELCOME (#announcements): Welcome to {server}! Read the rules, grab your roles, and say hi in the lobby. Questions go in help, bugs in bug-reports.
+WELCOME (#announcements): Welcome to {server}! Read the rules, pick your roles in self-roles, and say hi in the lobby. Questions go in help, bugs in bug-reports.
 AUTOMOD: Block suspected spam, Block mention spam, Block slurs and sexual content, Block scam bait
 
-(preview embed size 1163/6000 characters)
+(preview embed size 2530/6000 characters)
+

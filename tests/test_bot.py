@@ -12,7 +12,7 @@ def test_commands_registered():
     assert {c.name for c in tmpl.commands} == {"save", "load", "list"}
     setup = next(c for c in b.tree.get_commands() if c.name == "setup")
     assert setup.default_permissions.administrator
-    assert {p.name for p in setup.parameters} == {"prompt", "mode", "preset"}
+    assert {p.name for p in setup.parameters} == {"prompt", "mode", "preset", "size"}
 
 
 def member(admin, uid=5):

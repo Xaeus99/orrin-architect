@@ -40,6 +40,24 @@ class Report:
         return s
 
 
+PICKER_MAX = 20   # buttons per message (Discord allows 25: 5 rows x 5)
+PICKER_TEXT = ("🎨 **Pick your roles** — tap a button to add it, tap again to remove it. "
+               "Colours, pings and more.")
+
+
+def picker_channel(plan: dict, ch_ids: dict):
+    """The channel the self-role picker goes in: self-roles > *roles* > welcome."""
+    names = [ch["name"] for c in plan["categories"] for ch in c["channels"] if ch["type"] == "text"]
+    for want in ("self-roles", "pick-roles", "get-roles", "roles"):
+        for n in names:
+            if n == want and ch_ids.get(n):
+                return ch_ids[n]
+    for n in names:
+        if "role" in n and "info" not in n and ch_ids.get(n):
+            return ch_ids[n]
+    return None
+
+
 def to_create(plan: dict, snapshot: dict, mode: str) -> dict:
     """What the plan will add, after 'add' mode skips things that already exist."""
     roles_existing = {r["name"].lower() for r in snapshot["roles"]}
@@ -305,6 +323,19 @@ class Applier:
                 mid = await self.a.send(wid, content=plan["welcome_message"])
                 J["created"]["messages"].append([wid, mid])
             ops.append(Op("post the welcome", post_welcome))
+        # self-role picker: buttons for every self-assignable role, in a self-roles / roles channel
+        picks = [(role_ids[r["name"]], r["name"]) for r in plan["roles"]
+                 if r.get("self_assignable") and role_ids.get(r["name"]) is not None]
+        pick_ch = picker_channel(plan, ch_ids)
+        if picks and pick_ch and (pick_ch in created_set or mode == "replace"):
+            for i in range(0, len(picks), PICKER_MAX):
+                group = picks[i:i + PICKER_MAX]
+
+                async def post_picker(group=group, first=(i == 0)):
+                    mid = await self.a.send(pick_ch, content=PICKER_TEXT if first else "More roles:",
+                                            role_buttons=group)
+                    J["created"]["messages"].append([pick_ch, mid])
+                ops.append(Op("post the self-role picker", post_picker))
         res += await self._run(ops, progress, "messages")
 
         # 8. replace: remove the old layout (backed up already) --------------------

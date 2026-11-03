@@ -14,13 +14,37 @@ with no AI at all thanks to its built-in planner.
 | Command | What happens |
 |---|---|
 | `/setup prompt:<description>` | Plans a layout and shows a preview with ✅ Confirm · ✖️ Cancel · 🔄 Regenerate |
+| `/setup ... size:big\|normal\|small` | How big to build. **big** (default) ≈ 25 roles and 30+ text channels plus voice, forum and stage; **normal** ≈ 17 roles and 20+ text channels; **small** ≈ 8 roles and 10 text channels. Saying "small server for friends" in the prompt also picks small |
 | `/setup ... mode:replace` | Replaces the current layout. Asks twice, and saves a full backup first |
-| `/setup preset:<name>` | Builds a built-in preset: software product (like ORRIN), gaming community, study group, creator fanbase, roleplay, or the exact ORRIN layout |
+| `/setup preset:<name>` | Builds a built-in preset: software product (like ORRIN), gaming community, study group, creator fanbase, roleplay, community/friends hangout, or the ORRIN layout (works with `size:` too) |
 | `/setup-undo` | Reverts the last setup in this server |
 | `/template save name:<n>` | Saves this server's current layout (copy the ORRIN server, then load it anywhere) |
 | `/template load name:<n>` | Previews and builds a saved template (or `preset:gaming` etc.) |
 | `/template list` | Lists the saved templates and presets |
 | `/architect-help` | Quick help |
+
+**New in 1.1: bigger, better servers.** The presets and the planner follow what Discord
+server-setup guides actually recommend (notes from 105 setup videos and 3 written guides in
+[`knowledge/server_design.md`](knowledge/server_design.md)):
+
+- **Roles, top to bottom:** Owner (the only full admin) → Admin → Moderator → Trial Mod →
+  Bots → special roles (Event Host, Pro Player, Streamer, VIP…) → colour roles → level roles
+  (Active Lv 5 → Legend Lv 50) → the member role → ping roles (announcements, events,
+  giveaways, LFG…) → pronoun / region roles.
+- **Channels** in emoji-header categories, in the order a newcomer reads them: 📢 Important
+  (rules, announcements, welcome, roles-info, self-roles, faq, server-guide) → 💬 Community
+  (general, introductions, media, memes, bot-commands, off-topic, question-of-the-day,
+  counting…) → the server's own topics → 🎉 Events → 💡 Feedback → 🔒 Staff → 🔊 Voice.
+- **Self-role picker:** the bot posts buttons in `#self-roles` so members pick their own
+  colour, ping and pronoun roles (tap again to remove). It only ever hands out roles with no
+  permissions.
+- **Thin AI plans get topped up:** if the local AI plans too few roles or channels for the
+  size you chose, the missing basics (staff ladder, bots, levels, colours, pings, info,
+  community, events, staff and voice channels) are added. Nothing it planned is removed.
+- The AI prompt now carries a short digest of those guides, and asks Ollama not to "think"
+  first, so `/setup` answers much faster with qwen3.
+
+Level roles are created for you; hand them out with any levelling bot (or by hand).
 
 **What a plan contains:** categories with an emoji header; text, voice, forum, announcement and
 stage channels with topics and slowmode; roles with colours and real permission sets (full admin
@@ -41,7 +65,7 @@ mentions-only notifications and Community mode.
 - Every change is logged in a private `#architect-log` channel and in `data/journal/`.
 - It checks Discord's limits before touching anything (500 channels, 250 roles, 50 channels per
   category, 100-character names, AutoMod caps), and caps one plan at 20 categories, 150 channels
-  and 40 roles.
+  and 40 roles (a big preset is about 60 channels and 30 roles).
 - The AI's plan is never trusted blindly. It's validated and repaired: bad names, unknown
   permissions, too many admins, dangerous permissions on self-assignable roles, oversized topics and
   so on. If the AI answers nonsense twice, the built-in planner takes over.
@@ -101,6 +125,7 @@ Other choices in `.env`:
 dry_run.bat a cozy study group for AP exams with focus rooms
 python -m architect.cli "creator fanbase for my twitch streams" --variant 2
 python -m architect.cli --preset orrin --json
+python -m architect.cli --preset gaming --size normal
 ```
 This prints the full plan (roles with permissions, decorated channel names, rules, AutoMod) and
 changes nothing.
@@ -125,7 +150,9 @@ architect/
   bot.py              slash commands, preview buttons, rules-accept button
   planner/llm.py      Ollama / OpenAI-compatible planner (schema, retries)
   planner/fallback.py keyword -> preset blend (no AI)
-  presets.py          software (ORRIN), gaming, study, creator, roleplay
+  planner/expand.py   tops thin plans up to the size's minimum roles / text channels
+  presets.py          software (ORRIN), gaming, study, creator, roleplay, community; sizes
+  knowledge.py        the short guide digest the AI planner reads
   schema.py           plan JSON schema + validation/repair
   permissions.py      permission names -> Discord bits, role permission sets
   overwrites.py       private / read-only channel permissions
@@ -134,7 +161,7 @@ architect/
   discord_adapter.py  the discord.py calls
   storage.py          backups, journals, templates, copy-a-server
   cli.py              dry run
-tests/                105 tests, including an in-memory fake server
+tests/                164 tests, including an in-memory fake server
 ```
 
 Run the tests: `pip install -r requirements-dev.txt` then `python -m pytest`.

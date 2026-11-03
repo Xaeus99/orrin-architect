@@ -1,4 +1,5 @@
-"""Deterministic planner: keywords -> a preset blend. Works with no AI at all.
+"""Deterministic planner: keywords -> a preset blend, sized and topped up to the minimum size.
+Works with no AI at all.
 
 Same prompt + same variant -> same plan. `variant` (the Regenerate button) rotates
 the emoji theme and the secondary preset so Regenerate shows something different."""
@@ -8,6 +9,7 @@ import copy
 import re
 
 from .. import presets as P
+from .expand import expand_plan, resolve_size
 
 KEYWORDS: dict[str, list[str]] = {
     "gaming": ["game", "gaming", "gamer", "clan", "guild", "esport", "tournament", "minecraft", "valorant",
@@ -20,6 +22,8 @@ KEYWORDS: dict[str, list[str]] = {
               "students", "tutor", "revision", "gcse", "sat", "language exchange", "coding bootcamp", "notes"],
     "creator": ["youtube", "youtuber", "streamer", "stream", "twitch", "fans", "fanbase", "creator", "tiktok",
                 "podcast", "musician", "artist", "band", "vtuber", "influencer", "subscribers", "fan "],
+    "community": ["friends", "hangout", "community", "chill", "social", "vibe", "hang out", "anime",
+                  "fun server", "chat server"],
     "roleplay": ["roleplay", "role-play", "rp", "lore", "character", "fantasy", "dnd", "d&d", "campaign",
                  "story", "medieval", "kingdom", "dungeon", "rpg", "oc ", "worldbuilding"],
 }
@@ -81,21 +85,22 @@ def extract_name(prompt: str) -> str:
     return m.group(1).strip() if m else ""
 
 
-def fallback_plan(prompt: str, variant: int = 0) -> dict:
+def fallback_plan(prompt: str, variant: int = 0, size: str | None = None) -> dict:
     prompt = prompt or ""
+    size = resolve_size(size, prompt)
     sc = score(prompt)
     ranked = sorted(sc.items(), key=lambda kv: (-kv[1], list(KEYWORDS).index(kv[0])))
     base = ranked[0][0] if ranked[0][1] > 0 else "software"
     if "orrin" in prompt.lower() and base == "software":
         base = "orrin"
-    plan = P.get(base)
+    plan = P.get(base, size)
     plan["source"] = f"fallback:{base}"
     picked = [base]
 
     seconds = [n for n, s in ranked[1:] if s > 0]
     if seconds:
         second = seconds[variant % len(seconds)] if variant else seconds[0]
-        _blend(plan, P.get(second))
+        _blend(plan, P.get(second, size))
         picked.append(second)
 
     low = " " + prompt.lower() + " "
@@ -124,7 +129,10 @@ def fallback_plan(prompt: str, variant: int = 0) -> dict:
     name = extract_name(prompt)
     if name:
         plan["server_name"] = name
-    plan["summary"] = (plan.get("summary", "") + f" Built from: {' + '.join(picked)}.").strip()
+    source = plan.get("source")
+    plan, _notes = expand_plan(plan, size)
+    plan["source"] = source
+    plan["summary"] = (plan.get("summary", "") + f" Built from: {' + '.join(picked)} ({size}).").strip()
     return plan
 
 
@@ -140,15 +148,27 @@ def _blend(plan: dict, other: dict) -> None:
     """Bring the other preset's distinctive public category and its non-staff roles."""
     have_cats = {c["name"].lower() for c in plan["categories"]}
     skip = {"important", "staff", "voice", "start here", "gateway", "community"}
+    have_ch = {x["name"].lower() for c in plan["categories"] for x in c["channels"]}
+    skip |= {"events", "feedback"}
     for c in other["categories"]:
         if c["name"].lower() not in have_cats and c["name"].lower() not in skip and not c.get("private"):
-            _insert_before_staff(plan, copy.deepcopy(c))
-            break
+            c2 = copy.deepcopy(c)
+            c2["channels"] = [x for x in c2["channels"] if x["name"].lower() not in have_ch]
+            if c2["channels"]:
+                _insert_before_staff(plan, c2)
+                break
     have_roles = {r["name"].lower() for r in plan["roles"]}
     staffish = {"owner", "admin", "moderator", "organizer", "game master", "creator"}
     added = 0
+    member = (plan.get("member_role") or "").lower()
     for r in other["roles"]:
-        if r["name"].lower() not in have_roles and r["name"].lower() not in staffish and added < 2:
-            pos = len(plan["roles"]) - 1  # keep the base member role last
-            plan["roles"].insert(max(pos, 0), copy.deepcopy(r))
+        if r.get("self_assignable") or r["name"].lower() == (other.get("member_role") or "").lower():
+            continue
+        if r["name"].lower() not in have_roles and r["name"].lower() not in staffish and added < 2 \
+                and str(r.get("permissions")) not in {"administrator", "admin", "moderator", "helper"}:
+            # specials go just above the colour/level roles (i.e. before the first self-assign or base role)
+            pos = next((i for i, x in enumerate(plan["roles"])
+                        if x.get("self_assignable") or x["name"].lower() == member
+                        or "(lv " in x["name"].lower()), len(plan["roles"]))
+            plan["roles"].insert(pos, copy.deepcopy(r))
             added += 1

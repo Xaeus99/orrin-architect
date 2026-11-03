@@ -1,7 +1,7 @@
 """Dry run: print the plan for a prompt without touching Discord.
 
   python -m architect.cli "a cozy study group for AP exams"
-  python -m architect.cli --preset gaming
+  python -m architect.cli --preset gaming --size normal
   python -m architect.cli "gaming clan" --json --variant 2 --no-llm
 """
 from __future__ import annotations
@@ -23,6 +23,8 @@ def main(argv=None):
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("prompt", nargs="*", help="what the server is for")
     ap.add_argument("--preset", choices=sorted(presets.PRESETS))
+    ap.add_argument("--size", choices=["small", "normal", "big"], default=None,
+                    help="server size (default: from the prompt, else big)")
     ap.add_argument("--variant", type=int, default=0, help="like pressing Regenerate N times")
     ap.add_argument("--json", action="store_true", help="print the validated plan as JSON")
     ap.add_argument("--no-llm", action="store_true", help="use only the built-in planner")
@@ -36,14 +38,15 @@ def main(argv=None):
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
     if a.preset:
-        plan, warns, _ = validate_plan(presets.get(a.preset))
+        plan, warns, _ = validate_plan(presets.get(a.preset, a.size or "big"))
         used = f"preset:{a.preset}"
     else:
         prompt = " ".join(a.prompt).strip()
         if not prompt:
             ap.error("give a prompt or --preset")
         llm = None if a.no_llm else planner_from_env()
-        plan, warns, used = asyncio.run(make_plan(prompt, llm=llm, variant=a.variant, server_name=a.name))
+        plan, warns, used = asyncio.run(make_plan(prompt, llm=llm, variant=a.variant, server_name=a.name,
+                                                     size=a.size))
     if a.json:
         print(json.dumps({"planner": used, "warnings": warns, "plan": plan}, ensure_ascii=False, indent=2))
     else:

@@ -1,6 +1,6 @@
 """ORRIN Architect - the Discord bot.
 
-/setup prompt:<text> [mode:add|replace] [preset]  -> preview -> Confirm / Cancel / Regenerate
+/setup prompt:<text> [mode:add|replace] [preset] [size:big|normal|small]  -> preview -> Confirm / Cancel / Regenerate
 /setup-undo                                        -> undo the last setup in this server
 /template save|load|list                           -> reuse layouts across servers
 /architect-help
@@ -17,7 +17,7 @@ from discord import app_commands
 
 from . import __version__, presets, storage
 from .applier import Applier, CapacityError, LOG_CHANNEL
-from .discord_adapter import ACCEPT_PREFIX, DiscordAdapter
+from .discord_adapter import ACCEPT_PREFIX, PICK_PREFIX, DiscordAdapter
 from .planner import make_plan, planner_from_env
 from .preview import plan_embed
 from .render import plain
@@ -25,6 +25,21 @@ from .schema import validate_plan
 
 log = logging.getLogger("architect")
 PRESET_CHOICES = [app_commands.Choice(name=v, value=k) for k, v in presets.DESCRIPTIONS.items()]
+SIZE_CHOICES = [app_commands.Choice(name="big (default): ~25 roles, 30+ text channels", value="big"),
+                app_commands.Choice(name="normal: ~15 roles, ~20 text channels", value="normal"),
+                app_commands.Choice(name="small: ~8 roles, ~10 text channels", value="small")]
+# a self-pick button never hands out a role with any of these
+UNSAFE_PICK = ("administrator", "manage_guild", "manage_roles", "manage_channels", "manage_messages",
+               "manage_webhooks", "manage_threads", "manage_nicknames", "manage_expressions", "manage_events",
+               "kick_members", "ban_members", "moderate_members", "mention_everyone", "mute_members",
+               "deafen_members", "move_members", "view_audit_log")
+
+
+def pick_is_safe(role: discord.Role) -> bool:
+    return not role.managed and not role.is_default() and not any(getattr(role.permissions, p, False)
+                                                                  for p in UNSAFE_PICK)
+
+
 MODE_CHOICES = [app_commands.Choice(name="add (keep everything, add what's missing)", value="add"),
                 app_commands.Choice(name="replace (remove the old layout - asks twice)", value="replace")]
 
@@ -72,7 +87,11 @@ class Architect(discord.Client):
 
     async def on_interaction(self, it: discord.Interaction):
         cid = (it.data or {}).get("custom_id", "") if it.type == discord.InteractionType.component else ""
-        if not cid.startswith(ACCEPT_PREFIX) or it.guild is None:
+        if it.guild is None:
+            return
+        if cid.startswith(PICK_PREFIX):
+            return await self.toggle_pick(it, cid)
+        if not cid.startswith(ACCEPT_PREFIX):
             return
         role = it.guild.get_role(int(cid[len(ACCEPT_PREFIX):]))
         if role is None:
@@ -84,6 +103,26 @@ class Architect(discord.Client):
             await it.response.send_message(f"Welcome! You now have **{role.name}**. 🎉", ephemeral=True)
         except discord.Forbidden:
             await it.response.send_message("I couldn't give you the role (my role must be above it). "
+                                           "Please tell a staff member.", ephemeral=True)
+
+    async def toggle_pick(self, it: discord.Interaction, cid: str):
+        try:
+            role = it.guild.get_role(int(cid[len(PICK_PREFIX):]))
+        except ValueError:
+            role = None
+        if role is None:
+            return await it.response.send_message("That role no longer exists.", ephemeral=True)
+        if not pick_is_safe(role):
+            return await it.response.send_message("That role can't be self-assigned.", ephemeral=True)
+        try:
+            if role in it.user.roles:
+                await it.user.remove_roles(role, reason="Self-role picker")
+                await it.response.send_message(f"Removed **{role.name}**.", ephemeral=True)
+            else:
+                await it.user.add_roles(role, reason="Self-role picker")
+                await it.response.send_message(f"Added **{role.name}**. Tap again to remove it.", ephemeral=True)
+        except discord.Forbidden:
+            await it.response.send_message("I couldn't change that role (my role must be above it). "
                                            "Please tell a staff member.", ephemeral=True)
 
     def lock(self, gid) -> asyncio.Lock:
@@ -98,8 +137,9 @@ async def architect_log(guild: discord.Guild, text: str):
 
 class PreviewView(discord.ui.View):
     def __init__(self, bot: Architect, author_id: int, prompt: str, mode: str, plan: dict, warns, used,
-                 variant: int = 0, fixed_plan: bool = False):
+                 variant: int = 0, fixed_plan: bool = False, size: str | None = None):
         super().__init__(timeout=600)
+        self.size = size
         self.bot, self.author_id, self.prompt, self.mode = bot, author_id, prompt, mode
         self.plan, self.warns, self.used, self.variant, self.fixed = plan, warns, used, variant, fixed_plan
         self.armed = False  # replace mode: second confirmation
@@ -144,7 +184,7 @@ class PreviewView(discord.ui.View):
         self.armed = False
         self.confirm.label, self.confirm.style, self.confirm.emoji = "Confirm", discord.ButtonStyle.success, "✅"
         self.plan, self.warns, self.used = await make_plan(self.prompt, llm=self.bot.llm, variant=self.variant,
-                                                           server_name=it.guild.name)
+                                                           server_name=it.guild.name, size=self.size)
         await it.edit_original_response(content=None, embed=self.embed(), view=self)
 
 
@@ -219,18 +259,20 @@ def register(bot: Architect):
     @tree.command(name="setup", description="Design and build this server from a description")
     @app_commands.describe(prompt="Describe the server, e.g. 'study group for AP exams with focus rooms'",
                            mode="add = keep everything (default); replace = remove the old layout first",
-                           preset="Start from a built-in preset instead of the prompt")
-    @app_commands.choices(mode=MODE_CHOICES, preset=PRESET_CHOICES)
+                           preset="Start from a built-in preset instead of the prompt",
+                           size="How big: big (default), normal or small")
+    @app_commands.choices(mode=MODE_CHOICES, preset=PRESET_CHOICES, size=SIZE_CHOICES)
     @app_commands.default_permissions(administrator=True)
     @app_commands.guild_only()
     async def setup(it: discord.Interaction, prompt: str = "", mode: app_commands.Choice[str] = None,
-                    preset: app_commands.Choice[str] = None):
+                    preset: app_commands.Choice[str] = None, size: app_commands.Choice[str] = None):
         if not await guard(it):
             return
         m = mode.value if mode else "add"
+        sz = size.value if size else None
         await it.response.defer(thinking=True)
         if preset:
-            raw = presets.get(preset.value)
+            raw = presets.get(preset.value, sz or "big")
             raw.setdefault("server_name", it.guild.name)
             plan, warns, _e = validate_plan(raw)
             plan["welcome_message"] = plan["welcome_message"].replace("{server}", it.guild.name)
@@ -238,9 +280,9 @@ def register(bot: Architect):
         else:
             if not prompt.strip():
                 return await it.followup.send("Give me a prompt (what the server is for) or pick a preset.")
-            plan, warns, used = await make_plan(prompt, llm=bot.llm, server_name=it.guild.name)
+            plan, warns, used = await make_plan(prompt, llm=bot.llm, server_name=it.guild.name, size=sz)
             fixed = False
-        view = PreviewView(bot, it.user.id, prompt or preset.name, m, plan, warns, used, fixed_plan=fixed)
+        view = PreviewView(bot, it.user.id, prompt or preset.name, m, plan, warns, used, fixed_plan=fixed, size=sz)
         await it.followup.send(embed=view.embed(), view=view)
 
     @tree.command(name="setup-undo", description="Undo the last /setup in this server")
@@ -318,7 +360,9 @@ def register(bot: Architect):
         await it.response.send_message(
             "**ORRIN Architect** builds a whole server from a description.\n"
             "• `/setup prompt:<description>` → preview → ✅ Confirm / ✖️ Cancel / 🔄 Regenerate\n"
+            "• `size:` big (default, ~25 roles, 30+ text channels), normal or small\n"
             "• `mode:replace` removes the old layout (asks twice, backs up first)\n"
+            "• Members pick colour/ping/pronoun roles with the buttons in #self-roles\n"
             "• `/setup-undo` reverts the last setup · `/template save|load|list` reuse layouts\n"
             "Only server admins can use it. Every change is logged in #architect-log.", ephemeral=True)
 
