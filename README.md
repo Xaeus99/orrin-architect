@@ -163,7 +163,7 @@ architect/
   discord_adapter.py  the discord.py calls
   storage.py          backups, journals, templates, copy-a-server
   cli.py              dry run
-tests/                165 tests, including an in-memory fake server
+tests/                166 tests, including an in-memory fake server
 ```
 
 Run the tests: `pip install -r requirements-dev.txt` then `python -m pytest`.

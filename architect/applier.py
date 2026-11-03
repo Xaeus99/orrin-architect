@@ -297,7 +297,18 @@ class Applier:
         # 6. AutoMod -----------------------------------------------------------
         exempt = [role_ids[r["name"]] for r in plan["roles"] if r.get("staff") and r["name"] in role_ids]
         ops = []
+        have_am: dict[str, int] = {}
+        have_names = set()
+        for r0 in snapshot.get("automod") or []:
+            have_am[r0.get("kind", "")] = have_am.get(r0.get("kind", ""), 0) + 1
+            have_names.add(str(r0.get("name", "")).lower())
         for rule in plan["automod"]:
+            cap = 6 if rule["kind"] == "keyword" else 1   # Discord's per-server limit for each kind
+            if rule["name"].lower() in have_names or have_am.get(rule["kind"], 0) >= cap:
+                rep.notes.append(f"AutoMod '{rule['name']}': this server already has that kind of rule, kept it")
+                continue
+            have_am[rule["kind"]] = have_am.get(rule["kind"], 0) + 1
+
             async def mkam(rule=rule):
                 aid = await self.a.create_automod(rule, log_id, exempt)
                 J["created"]["automod"].append(aid)

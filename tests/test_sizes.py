@@ -267,3 +267,19 @@ def test_big_plans_get_more_ai_time():
     assert llm.budget("big") == SIZE_TIMEOUT["big"] >= 300
     assert llm.budget("small") == 120
     assert LLMPlanner("ollama", "m", "http://x", timeout=900).budget("big") == 900
+
+
+async def test_second_setup_keeps_existing_automod():
+    g = FakeGuild()
+    plan, _ = vplan(presets.get("gaming", "small"))
+
+    async def nosleep(_):
+        pass
+    snap = await g.snapshot()
+    snap["automod"] = [{"id": 1, "name": "Old mention rule", "kind": "mention_spam"},
+                       {"id": 2, "name": "Old spam rule", "kind": "spam"}]
+    rep = await Applier(g, sleep=nosleep).apply(plan, snap, mode="add")
+    assert not rep.failed, rep.failed
+    kinds = sorted(a["kind"] for a in g.automod.values())
+    assert "mention_spam" not in kinds and "spam" not in kinds
+    assert sum("already has" in n for n in rep.notes) == 2

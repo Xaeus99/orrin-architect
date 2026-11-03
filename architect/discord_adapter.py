@@ -75,7 +75,14 @@ class DiscordAdapter:
                           "parent_id": c.category_id, "topic": getattr(c, "topic", None),
                           "nsfw": getattr(c, "nsfw", False) if not isinstance(c, discord.CategoryChannel) else False,
                           "slowmode": getattr(c, "slowmode_delay", 0) or 0, "overwrites": ows})
-        return {"guild_id": g.id, "name": g.name, "everyone_id": g.default_role.id,
+        automod = []
+        try:   # existing AutoMod rules, so a second /setup doesn't hit Discord's one-per-kind limits
+            kinds = {v: k for k, v in TRIGGER.items()}
+            for r in await g.fetch_automod_rules():
+                automod.append({"id": r.id, "name": r.name, "kind": kinds.get(r.trigger.type, str(r.trigger.type))})
+        except (discord.HTTPException, AttributeError):
+            pass
+        return {"guild_id": g.id, "name": g.name, "everyone_id": g.default_role.id, "automod": automod,
                 "everyone_permissions": g.default_role.permissions.value,
                 "community": "COMMUNITY" in g.features, "taken_at": dt.datetime.utcnow().isoformat() + "Z",
                 "settings": {"verification_level": g.verification_level.value,
