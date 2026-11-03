@@ -9,6 +9,19 @@ AutoMod for you. It's styled like the ORRIN server: `📢 | IMPORTANT | 📢` ca
 Free to run, MIT licensed. It plans with the free local AI on your PC (Ollama), and still works
 with no AI at all thanks to its built-in planner.
 
+## Get it in 5 minutes (free)
+
+![ORRIN Architect building a server](docs/demo.gif)
+
+1. **Download** `orrin_architect_bot.zip` from the [latest release](https://github.com/Xaeus99/orrin-architect/releases/latest) and unzip it.
+2. **Make a bot.** Go to [discord.com/developers/applications](https://discord.com/developers/applications) → **New Application** → **Bot** → **Reset Token** → **Copy**. Never share that token.
+3. **Paste the token.** Double-click `start.bat`. The first run installs what it needs and opens `.env` in Notepad: paste the token after `DISCORD_TOKEN=`, save, and run `start.bat` again.
+4. **Invite it.** Copy your **Application ID** (General Information) into this link, open it and pick your server:
+   `https://discord.com/oauth2/authorize?client_id=YOUR_APPLICATION_ID&permissions=8&integration_type=0&scope=bot+applications.commands`
+5. **Run `/setup`** in your server, check the preview, press **Confirm**.
+
+You need Windows and Python 3.10+. [Ollama](https://ollama.com) (free local AI) is optional: without it, the built-in planner builds the server instantly. Every step in detail: [Go live in 5 steps](#go-live-in-5-steps-windows).
+
 ## What it does
 
 | Command | What happens |
