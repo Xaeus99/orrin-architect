@@ -13,6 +13,7 @@ import asyncio
 import json
 import os
 import re
+import time
 
 import aiohttp
 
@@ -43,6 +44,9 @@ Put rules/announcements/welcome in a first read_only category writable_by staff.
 category visible_to staff roles. One emoji per category and channel. Keep names short and clear,
 original and family friendly. Use real Discord features: forum channels for help/suggestions,
 announcement channel for news, stage only for big talks. Never include NSFW channels."""
+
+# whole-plan time budget per size (seconds); LLM_TIMEOUT wins if it is larger
+SIZE_TIMEOUT = {"small": 120.0, "normal": 240.0, "big": 360.0}
 
 SIZE_GUIDE = {
     "small": "SIZE small: 3-5 categories, 8-12 text channels, 5-8 roles.",
@@ -117,7 +121,9 @@ class LLMPlanner:
                          ". Reply again with the corrected JSON object only."})
         return msgs
 
-    async def _post(self, session: aiohttp.ClientSession, msgs: list[dict], temperature: float) -> str:
+    async def _post(self, session: aiohttp.ClientSession, msgs: list[dict], temperature: float,
+                    timeout: float | None = None) -> str:
+        timeout = timeout or self.timeout
         if self.kind == "ollama":
             # think=False: qwen3-style models otherwise "think" for minutes before answering
             body = {"model": self.model, "messages": msgs, "stream": False, "format": PLAN_JSON_SCHEMA,
@@ -131,19 +137,19 @@ class LLMPlanner:
             headers = {"Authorization": f"Bearer {self.api_key}"} if self.api_key else {}
         try:
             async with session.post(url, json=body, headers=headers,
-                                    timeout=aiohttp.ClientTimeout(total=self.timeout)) as r:
+                                    timeout=aiohttp.ClientTimeout(total=timeout)) as r:
                 txt = await r.text()
                 status = r.status
             if status == 400 and "think" in body and "think" in txt.lower():
                 body.pop("think")   # an Ollama/model that doesn't know the switch: ask again without it
                 async with session.post(url, json=body, headers=headers,
-                                        timeout=aiohttp.ClientTimeout(total=self.timeout)) as r:
+                                        timeout=aiohttp.ClientTimeout(total=timeout)) as r:
                     txt = await r.text()
                     status = r.status
             if status >= 400:
                 raise LLMError(f"{self.kind} answered HTTP {status}: {txt[:200]}")
         except asyncio.TimeoutError as e:
-            raise LLMError(f"{self.kind} timed out after {self.timeout:.0f}s") from e
+            raise LLMError(f"{self.kind} timed out after {timeout:.0f}s") from e
         except aiohttp.ClientError as e:
             raise LLMError(f"can't reach {self.kind} at {self.base_url} ({type(e).__name__})") from e
         try:
@@ -157,14 +163,22 @@ class LLMPlanner:
         except (KeyError, IndexError, TypeError) as e:
             raise LLMError("unexpected reply shape") from e
 
+    def budget(self, size: str) -> float:
+        """Seconds the whole AI plan may take: a big server is a long answer for a local 8B model,
+        so it gets more time than LLM_TIMEOUT (Discord lets a /setup answer for 15 minutes)."""
+        return max(self.timeout, SIZE_TIMEOUT.get(size, self.timeout))
+
     async def plan(self, prompt: str, variant: int = 0, size: str = "big") -> dict:
         temp = min(1.0, self.temperature + 0.2 * variant)
+        deadline = time.monotonic() + self.budget(size)
         async with aiohttp.ClientSession() as s:
-            raw = extract_json(await self._post(s, self.messages(prompt, size=size), temp))
+            raw = extract_json(await self._post(s, self.messages(prompt, size=size), temp,
+                                                timeout=max(5.0, deadline - time.monotonic())))
             _plan, warns, errs = validate_plan(raw)
-            if errs:
+            left = deadline - time.monotonic()
+            if errs and left >= 60:
                 raw = extract_json(await self._post(s, self.messages(prompt, "; ".join(errs + warns[:10]), size=size),
-                                                    temp))
+                                                    temp, timeout=left))
             return raw
 
 

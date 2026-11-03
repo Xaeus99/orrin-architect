@@ -108,7 +108,9 @@ planner, so `/setup` always answers.
 winget install Ollama.Ollama      (skip if you already have it)
 ollama pull qwen2.5:7b            (8 GB graphics card;  weaker PC: qwen2.5:3b or llama3.2:3b)
 ```
-Set `OLLAMA_MODEL` in `.env` to the model you pulled. Ollama's structured-output mode forces the
+Set `OLLAMA_MODEL` in `.env` to the model you pulled. A big server is a long answer for a local
+model, so a big plan may take up to 6 minutes (normal 4, small 2) before the bot gives up and uses
+the built-in planner; a larger `LLM_TIMEOUT` raises that. Ollama's structured-output mode forces the
 model to answer in the plan's JSON shape.
 
 Other choices in `.env`:
@@ -161,7 +163,7 @@ architect/
   discord_adapter.py  the discord.py calls
   storage.py          backups, journals, templates, copy-a-server
   cli.py              dry run
-tests/                164 tests, including an in-memory fake server
+tests/                165 tests, including an in-memory fake server
 ```
 
 Run the tests: `pip install -r requirements-dev.txt` then `python -m pytest`.

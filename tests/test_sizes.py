@@ -259,3 +259,11 @@ async def test_ollama_without_think_switch_retries_plain():
         assert used == "llm:m" and len(seen) == 2 and "think" not in seen[1]
     finally:
         await runner.cleanup()
+
+
+def test_big_plans_get_more_ai_time():
+    from architect.planner.llm import SIZE_TIMEOUT
+    llm = LLMPlanner("ollama", "m", "http://x", timeout=120)
+    assert llm.budget("big") == SIZE_TIMEOUT["big"] >= 300
+    assert llm.budget("small") == 120
+    assert LLMPlanner("ollama", "m", "http://x", timeout=900).budget("big") == 900
